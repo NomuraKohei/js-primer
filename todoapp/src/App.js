@@ -14,10 +14,12 @@ export class App {
 
         this.TodoListModel.onChange(() => {
             const todoListElement = element`<ul />`;
-            const todoItems = this.TodoListModel.getTodoItems();
+            const todoItems = this.todoListModel.getTodoItems();
             todoItems.forEach(item => {
-                const todoItemElemnt = element`<li>${item.title}</li>`;
-                todoListElement.appendChild(todoItemCountElement);
+                const todoItemElemnt = item.completed
+                    ? element`<input type="checkbox" class="checkbox" checked><s>${item.title}</s></li>`
+                    : element`<li><input type="checkbox" class="checkbox">${item.title}</li>`;
+                todoListElement.appendChild(todoItemElemnt);
             });
             render(todoListElement, containerElement);
             todoItemCountElement.textContent = `Todoアイテム数: ${this.todoListModel.getTotalCount()}`;
